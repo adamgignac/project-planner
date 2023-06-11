@@ -1,2 +1,4 @@
 __pycache__
 project.yaml
+.venv
+.ruff_cache
