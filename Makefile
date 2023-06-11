@@ -1,3 +1,7 @@
+.PHONY: setup
+setup:
+	poetry install
+
 .PHONY: lint
 lint:
 	poetry run black project_planner/
