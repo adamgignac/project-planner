@@ -38,9 +38,14 @@ def main(manifest: pathlib.Path):
         for board in boards:
             p_text.append(pretty_print(board))
         p_text.append(Text.from_markup(f"[bold cyan]{len(boards)}[/] needed"))
-        p = Panel(p_text, expand=False, title=Text.from_markup(
-            f"Slicing [green]{component.name}[/green]", style="bold cyan"
-        ), title_align="left")
+        p = Panel(
+            p_text,
+            expand=False,
+            title=Text.from_markup(
+                f"Slicing [green]{component.name}[/green]", style="bold cyan"
+            ),
+            title_align="left",
+        )
         console.print(p)
 
 
