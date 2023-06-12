@@ -4,6 +4,11 @@ setup:
 
 .PHONY: lint
 lint:
+	poetry run black --check .
+	poetry run ruff .
+
+.PHONY: format
+format:
 	poetry run black .
 	poetry run isort .
 	poetry run ruff --fix .
