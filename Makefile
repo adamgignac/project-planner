@@ -4,9 +4,9 @@ setup:
 
 .PHONY: lint
 lint:
-	poetry run black project_planner/
-	poetry run isort project_planner/
-	poetry run ruff --fix project_planner/
+	poetry run black .
+	poetry run isort .
+	poetry run ruff --fix .
 
 .PHONY: test
 test:
