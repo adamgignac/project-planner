@@ -45,7 +45,11 @@ def main(manifest: pathlib.Path, n: int = 1):
             p_text.append(pretty_print(bin))
         p_text.append(
             Text.from_markup(
-                f"[bold cyan]{len(bins)}[/] needed ([cyan]${component.price * len(bins):.2f}[/])"
+                (
+                    f"[bold cyan]{len(bins)}[/] needed"
+                    " "
+                    f"([cyan]${component.price * len(bins):.2f}[/])"
+                )
             )
         )
         p = Panel(
@@ -57,10 +61,12 @@ def main(manifest: pathlib.Path, n: int = 1):
             title_align="left",
         )
         console.print(p)
-    console.print(Text.from_markup(
-        f"Total cost: [cyan]${cost:.2f}[/]",
-        style="bold",
-    ))
+    console.print(
+        Text.from_markup(
+            f"Total cost: [cyan]${cost:.2f}[/]",
+            style="bold",
+        )
+    )
 
 
 if __name__ == "__main__":
