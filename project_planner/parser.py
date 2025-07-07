@@ -36,6 +36,7 @@ class ProjectComponent(BaseModel):
     length: float
     cuts: list[Cut]
     kerf: float = 0
+    price: float = 0
 
     @property
     def segments(self):
