@@ -53,7 +53,7 @@ class BinPacker(Generic[T]):
         number of bins with the given capacity.
         """
         bins: list[Bin[T]] = []
-        for item in sorted(items, reverse=True):
+        for item in sorted(items, reverse=True, key=self.sizer):
             for bin in bins:
                 if bin.fits(item):
                     bin.add(item)
@@ -66,3 +66,6 @@ class BinPacker(Generic[T]):
                 else:
                     raise ValueError("item exceeds maximum bin capacity")
         return bins
+
+
+# TODO: Stock Minimization Problem

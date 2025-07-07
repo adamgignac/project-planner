@@ -13,7 +13,10 @@ def pretty_print(bin: Bin):
     text = Text()
     text.append("[ ", style="yellow")
     text.append(
-        Text.from_markup("[yellow] | [/]".join(map(str, bin.items)), style="bold")
+        Text.from_markup(
+            "[yellow] | [/]".join(map(str, bin.items)),
+            style="bold",
+        )
     )
     if bin.capacity > 0:
         text.append(" | ", style="yellow")
@@ -23,30 +26,47 @@ def pretty_print(bin: Bin):
     return text
 
 
-def main(manifest: pathlib.Path):
+def main(manifest: pathlib.Path, n: int = 1):
     project = parse(manifest)
     console = Console()
     console.print(
         Text.from_markup(
-            f"Planning [yellow]{project.name}[/yellow] Cuts", style="bold cyan"
+            f"Planning [yellow]{project.name}[/] Cuts",
+            style="bold cyan",
         )
     )
+    cost = 0
     for component in project.components:
         packer = BinPacker[float](component.length, padding=component.kerf)
         p_text = Text()
-        boards = packer.pack(component.segments)
-        for board in boards:
-            p_text.append(pretty_print(board))
-        p_text.append(Text.from_markup(f"[bold cyan]{len(boards)}[/] needed"))
+        bins = packer.pack(component.segments * n)
+        cost += component.price * len(bins)
+        for bin in bins:
+            p_text.append(pretty_print(bin))
+        p_text.append(
+            Text.from_markup(
+                (
+                    f"[bold cyan]{len(bins)}[/] needed"
+                    " "
+                    f"([cyan]${component.price * len(bins):.2f}[/])"
+                )
+            )
+        )
         p = Panel(
             p_text,
             expand=False,
             title=Text.from_markup(
-                f"Slicing [green]{component.name}[/green]", style="bold cyan"
+                f"Slicing [green]{component.name}[/]", style="bold cyan"
             ),
             title_align="left",
         )
         console.print(p)
+    console.print(
+        Text.from_markup(
+            f"Total cost: [cyan]${cost:.2f}[/]",
+            style="bold",
+        )
+    )
 
 
 if __name__ == "__main__":
